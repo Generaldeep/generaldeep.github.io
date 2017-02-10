@@ -27,7 +27,6 @@ hitButton.addEventListener('click', function(event) {
   else {
     delegateRoles(allFetchedData);
     checkForBlackjack();
-    console.log('running count in hit button: ' +runningCardCount);
   }
 })
 
@@ -94,6 +93,20 @@ standButton.addEventListener('click', function(event) {
 let refreshButton = document.getElementById('refresh');
 refreshButton.addEventListener('click', function(event) {
   window.location.reload();
+
+  if (runCount > 0) {
+    return;
+  }
+  else {
+    while (dealCount < 4) {
+      runCount++;
+      delegateRoles(allFetchedData);
+      dealCount++;
+      console.log('runningCardCount: ' + runningCardCount);
+      console.log('player count: ' + playerCount);
+      console.log('deal count: ' + dealerCount);
+    }
+  }
 })
 
 
