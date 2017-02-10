@@ -91,10 +91,10 @@ standButton.addEventListener('click', function(event) {
 })
 
 
-// let refreshButton = document.getElementById('refresh');
-// refreshButton.addEventListener('click', function(event) {
-//
-// })
+let refreshButton = document.getElementById('refresh');
+refreshButton.addEventListener('click', function(event) {
+  window.location.reload();
+})
 
 
 
