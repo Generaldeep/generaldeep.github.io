@@ -26,7 +26,7 @@ hitButton.addEventListener('click', function(event) {
     return;
   } else {
     delegateRoles(allFetchedData);
-    console.log(runningCardCount);
+    console.log('running count in hit button: ' +runningCardCount);
   }
 })
 
@@ -34,9 +34,6 @@ hitButton.addEventListener('click', function(event) {
 let newHand = document.getElementById('play');
 newHand.addEventListener('click', function(event) {
   event.preventDefault();
-
-  console.log(dealerHiddenCardValue.length);
-
 
   if (dealerHiddenCardValue.length > 0) {
     while (playerBody.firstChild && dealerBody.firstChild) {
@@ -51,23 +48,26 @@ newHand.addEventListener('click', function(event) {
       playBtnCount++;
     }
   }
-
 })
 
 
 
+let dealCount = 0;
 let deal = document.getElementById('deal')
 deal.addEventListener('click', function(event) {
   event.preventDefault();
 
-  let deal = 0;
   if (runCount > 0) {
     return;
-  } else {
-    while (deal < 4) {
+  }
+  else {
+    while (dealCount < 4) {
       runCount++;
       delegateRoles(allFetchedData);
-      deal++;
+      dealCount++;
+      console.log('runningCardCount: ' + runningCardCount);
+      console.log('player count: ' + playerCount);
+      console.log('deal count: ' + dealerCount);
     }
   }
 })
@@ -117,10 +117,10 @@ function delegateRoles(arr) {
     caluculateCount(arr[i].cardValue);
     tempVar = arr.shift();
     discardedCardArr.push(tempVar);
-    runningCardCount++;
   }
-
-  checkForBlackjack();
+  // checkForBlackjack();
+  runningCardCount++;
+  console.log('running card count in delegateRoles: '+runningCardCount);
   // checkForBlackjack(playerCount);
   // runningCardCount++;
 
@@ -156,7 +156,9 @@ function caluculateCount(cardVal) {
     dealerHiddenCardValue.push(cardVal);
     cardVal = 0;
     dealerCount += parseInt(cardVal);
-  } else if (runningCardCount % 2 === 0) {
+  }
+
+  else if (runningCardCount % 2 === 0) {
     if (!parseInt(cardVal)) {
       if (cardVal === 'ACE') {
         return valueOfAce(player, playerCount);
@@ -165,7 +167,9 @@ function caluculateCount(cardVal) {
     }
     playerCount += parseInt(cardVal);
     document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerCount;
-  } else {
+  }
+
+  else {
     if (!parseInt(cardVal)) {
       if (cardVal === 'ACE') {
         return valueOfAce(cardVal, dealerCount);
@@ -199,30 +203,30 @@ function valueOfAce(value, countOn) {
 }
 
 function checkForBlackjack() {
-
   if (playerCount > 21) {
     return checkDealerTotal();
   }
-  return;
+  else {
+    checkDealerTotal();
+  }
 }
 
 
 function checkDealerTotal() {
-  // if(playerCount === 21) {
-  //   changeHiddenCardImage();
-  //   changeHiddenCardImage();
-  // }
-
-  changeHiddenCardImage();
-  changeHiddenCardValue();
-  document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerCount;
-
-
-  while (dealerCount < 17) {
-    delegateRoles(allFetchedData)
-    runningCardCount++;
+  if (playerCount > 21) {
+    changeHiddenCardImage();
+    changeHiddenCardValue();
+    document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerCount;
   }
-
+  else {
+    while (dealerCount < 17) {
+      runningCardCount = 3;
+      changeHiddenCardImage();
+      changeHiddenCardValue();
+      delegateRoles(allFetchedData)
+      // runningCardCount++; //do i need to increment runningCardCount here?
+    }
+  }
 }
 
 
@@ -248,14 +252,14 @@ function changeHiddenCardValue() {
 }
 
 
-function resetAllCounters() {
-  document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerCount;
-  playerCount = 0;
-  document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerCount;
-  dealerCount = 0;
-  playBtnCount = 0;
-  runningCardCount = 0;
-  runCount = 0;
-  cantHitNoMore = 0;
-  //  return;
-}
+// function resetAllCounters() {
+//   document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerCount;
+//   playerCount = 0;
+//   document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerCount;
+//   dealerCount = 0;
+//   playBtnCount = 0;
+//   runningCardCount = 0;
+//   runCount = 0;
+//   cantHitNoMore = 0;
+//   //  return;
+// }
