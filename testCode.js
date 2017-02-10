@@ -10,6 +10,7 @@ let runningCardCount = 0; //method to deal cards to player/dealer
 let playerCount = 0; //total of player
 let dealerCount = 0; //total of dealer
 let runCount = 0;
+let cantHitNoMore = 0;
 let cardsAndValuesArray = [];
 let dealerHiddenCardValue = [];
 let cardImgAndValueArr = [];
@@ -21,26 +22,40 @@ hitButton.addEventListener('click', function(event) {
 
   runningCardCount = 0;
 
-  if (playerCount < 21) {
-
+  if (cantHitNoMore > 0) {
+    return;
+  } else {
     delegateRoles(allFetchedData);
     console.log(runningCardCount);
-  } else {
-    console.log('already hit');
-
-    return;
   }
 })
 
 
-let playButton = document.getElementById('play');
-playButton.addEventListener('click', function(event) {
+let newHand = document.getElementById('play');
+newHand.addEventListener('click', function(event) {
   event.preventDefault();
-  while (playBtnCount < 10) {
-    fetchCard()
-    playBtnCount++;
+
+  console.log(dealerHiddenCardValue.length);
+
+
+  if (dealerHiddenCardValue.length > 0) {
+    while (playerBody.firstChild && dealerBody.firstChild) {
+      playerBody.removeChild(playerBody.firstChild);
+      dealerBody.removeChild(dealerBody.firstChild);
+      resetAllCounters();
+      //  return;
+    }
+  } else {
+    while (playBtnCount < 10) {
+      fetchCard()
+      playBtnCount++;
+    }
   }
+
 })
+
+
+
 let deal = document.getElementById('deal')
 deal.addEventListener('click', function(event) {
   event.preventDefault();
@@ -58,13 +73,11 @@ deal.addEventListener('click', function(event) {
 })
 
 
-
-
-
 let standButton = document.getElementById('stand');
 standButton.addEventListener('click', function(event) {
   event.preventDefault();
   runningCardCount = 3;
+  cantHitNoMore = 1;
 
   if (runCount < 5) {
     checkDealerTotal();
@@ -74,46 +87,22 @@ standButton.addEventListener('click', function(event) {
   else {
     return;
   }
-
-
 })
 
 
-
-// let newGame = document.getElementById('newGame');
-// newGame.addEventListener('click', function(event) {
-//   event.preventDefault();
-//
-//   // delegateRoles(allFetchedData);
-//
-//   // while (playerBody.firstChild && dealerBody.firstChild) {
-//   //     playerBody.removeChild(playerBody.firstChild);
-//   //     dealerBody.removeChild(dealerBody.firstChild);
-//   // }
-//
-//
-//   // fetchCard()
-//   // playBtnCount = 0;
-//   // playerCount = 0;
-//   // dealerCount = 0;
-//
-// })
-
-
-//stop async mistake function attempt
 function fetchCard() {
   // let deckID = '9lykfe2jz7o4';
-  return fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=1`)
+  return fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=20`)
     .then(function(response) {
       return response.json();
     })
     .then(function(jsonObj) {
       let cardsObj = jsonObj.cards;
       for (var i = 0; i < cardsObj.length; i++) {
-          allFetchedData.push({
-            imgAddress: cardsObj[i].image,
-            cardValue: cardsObj[i].value
-          })
+        allFetchedData.push({
+          imgAddress: cardsObj[i].image,
+          cardValue: cardsObj[i].value
+        })
       }
       return Promise.all(allFetchedData);
     })
@@ -129,11 +118,11 @@ function delegateRoles(arr) {
     tempVar = arr.shift();
     discardedCardArr.push(tempVar);
     runningCardCount++;
-    }
+  }
 
-    checkForBlackjack();
-    // checkForBlackjack(playerCount);
-    // runningCardCount++;
+  checkForBlackjack();
+  // checkForBlackjack(playerCount);
+  // runningCardCount++;
 
 }
 //
@@ -141,21 +130,19 @@ function assignCard(cardImgAdress) {
   let img = new Image();
   img.style.width = '170px';
   img.style.height = '220px';
-// console.log(runningCardCount);
+  // console.log(runningCardCount);
   if (runningCardCount === 1) {
     dealerHiddenCardValue.push(cardImgAdress);
     img.src = './images/cheetah.jpg';
     hiddenCard = img;
     hiddenCard.style.float = 'left';
     return dealerBody.appendChild(hiddenCard);
-  }
-  else if (runningCardCount % 2 === 0) {
+  } else if (runningCardCount % 2 === 0) {
     img.src = cardImgAdress.toString();
     player = img;
     player.style.float = 'left';
     return playerBody.appendChild(player);
-  }
-  else {
+  } else {
     img.src = cardImgAdress.toString();
     dealer = img;
     dealer.style.float = 'left';
@@ -165,12 +152,11 @@ function assignCard(cardImgAdress) {
 
 
 function caluculateCount(cardVal) {
-  if((runningCardCount === 1 )){
+  if ((runningCardCount === 1)) {
     dealerHiddenCardValue.push(cardVal);
     cardVal = 0;
     dealerCount += parseInt(cardVal);
-  }
-  else if (runningCardCount % 2 === 0) {
+  } else if (runningCardCount % 2 === 0) {
     if (!parseInt(cardVal)) {
       if (cardVal === 'ACE') {
         return valueOfAce(player, playerCount);
@@ -201,8 +187,7 @@ function valueOfAce(value, countOn) {
       value = 1;
       return playerCount += value;
     }
-  }
-  else if (countOn === dealerCount) {
+  } else if (countOn === dealerCount) {
     if (dealerCount <= 10 && dealerCount >= 0) {
       value = 11;
       return dealerCount += value;
@@ -213,9 +198,9 @@ function valueOfAce(value, countOn) {
   }
 }
 
-function checkForBlackjack(){
+function checkForBlackjack() {
 
-  if(playerCount > 21) {
+  if (playerCount > 21) {
     return checkDealerTotal();
   }
   return;
@@ -233,22 +218,11 @@ function checkDealerTotal() {
   document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerCount;
 
 
-while (dealerCount < 17) {
-  delegateRoles(allFetchedData)
-  runningCardCount++;
-}
-  // if(playerCount < 21 && dealerCount < 17) {
-  //   return fetchCard();
-  // }
-  // else if(playerCount > 21) {
-  //   changeHiddenCardImage();
-  //   changeHiddenCardValue();
-  //   console.log('Game over!');
-  // }
+  while (dealerCount < 17) {
+    delegateRoles(allFetchedData)
+    runningCardCount++;
+  }
 
-  // else {
-  //   console.log('game over');
-  // }
 }
 
 
@@ -271,4 +245,17 @@ function changeHiddenCardValue() {
   }
   dealerCount += parseInt(tempVal);
   return dealerCount;
+}
+
+
+function resetAllCounters() {
+  document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerCount;
+  playerCount = 0;
+  document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerCount;
+  dealerCount = 0;
+  playBtnCount = 0;
+  runningCardCount = 0;
+  runCount = 0;
+  cantHitNoMore = 0;
+  //  return;
 }
