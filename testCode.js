@@ -65,9 +65,6 @@ deal.addEventListener('click', function(event) {
       runCount++;
       delegateRoles(allFetchedData);
       dealCount++;
-      console.log('runningCardCount: ' + runningCardCount);
-      console.log('player count: ' + playerCount);
-      console.log('deal count: ' + dealerCount);
     }
   }
 })
@@ -94,19 +91,6 @@ let refreshButton = document.getElementById('refresh');
 refreshButton.addEventListener('click', function(event) {
   window.location.reload();
 
-  if (runCount > 0) {
-    return;
-  }
-  else {
-    while (dealCount < 4) {
-      runCount++;
-      delegateRoles(allFetchedData);
-      dealCount++;
-      console.log('runningCardCount: ' + runningCardCount);
-      console.log('player count: ' + playerCount);
-      console.log('deal count: ' + dealerCount);
-    }
-  }
 })
 
 
@@ -172,6 +156,7 @@ function assignCard(cardImgAdress) {
 
 
 function caluculateCount(cardVal) {
+  console.log('card value in caluculateCount: '+cardVal);
   if ((runningCardCount === 1)) {
     dealerHiddenCardValue.push(cardVal);
     cardVal = 0;
@@ -204,20 +189,24 @@ function caluculateCount(cardVal) {
 
 function valueOfAce(value, countOn) {
   if (countOn === playerCount) {
-    if (playerCount <= 10 && playerCount >= 0) {
+    if (playerCount < 10) {
+      console.log('if player count is < 10');
       value = 11;
-      return playerCount += value;
+       playerCount += value;
     } else if (playerCount > 10) {
+      console.log('if player count is > 10');
       value = 1;
-      return playerCount += value;
+       playerCount += value;
     }
   } else if (countOn === dealerCount) {
-    if (dealerCount <= 10 && dealerCount >= 0) {
+    if (dealerCount < 10) {
+      console.log('if dealer count is < 10');
       value = 11;
-      return dealerCount += value;
+       dealerCount += value;
     } else if (dealerCount > 10) {
+      console.log('if dealer count is > 10');
       value = 1;
-      return dealerCount += value;
+       dealerCount += value;
     }
   }
 }
