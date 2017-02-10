@@ -15,12 +15,21 @@ let dealerHiddenCardValue = [];
 let cardImgAndValueArr = [];
 
 
-let testButton = document.getElementById('testButton');
-testButton.addEventListener('click', function(event) {
+let hitButton = document.getElementById('hit');
+hitButton.addEventListener('click', function(event) {
   event.preventDefault();
 
   runningCardCount = 0;
-  delegateRoles(allFetchedData);
+
+  if (playerCount < 21) {
+
+    delegateRoles(allFetchedData);
+    console.log(runningCardCount);
+  } else {
+    console.log('already hit');
+
+    return;
+  }
 })
 
 
@@ -32,8 +41,8 @@ playButton.addEventListener('click', function(event) {
     playBtnCount++;
   }
 })
-let hitButton = document.getElementById('hit')
-hitButton.addEventListener('click', function(event) {
+let deal = document.getElementById('deal')
+deal.addEventListener('click', function(event) {
   event.preventDefault();
 
   let deal = 0;
@@ -56,7 +65,16 @@ let standButton = document.getElementById('stand');
 standButton.addEventListener('click', function(event) {
   event.preventDefault();
   runningCardCount = 3;
-  checkDealerTotal();
+
+  if (runCount < 5) {
+    checkDealerTotal();
+    runCount++;
+  }
+  // checkDealerTotal();
+  else {
+    return;
+  }
+
 
 })
 
@@ -111,9 +129,9 @@ function delegateRoles(arr) {
     tempVar = arr.shift();
     discardedCardArr.push(tempVar);
     runningCardCount++;
-    console.log('running count: ' + runningCardCount);
     }
 
+    checkForBlackjack();
     // checkForBlackjack(playerCount);
     // runningCardCount++;
 
@@ -198,7 +216,6 @@ function valueOfAce(value, countOn) {
 function checkForBlackjack(){
 
   if(playerCount > 21) {
-    console.log('Busted! ' + 'count: ' + playerCount)
     return checkDealerTotal();
   }
   return;
