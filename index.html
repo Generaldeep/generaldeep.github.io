@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blackjack</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" src="materialize.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+    <nav class="#2962ff black accent-4">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">Home</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="play.html">Play</a></li>
+                <li><a href="rules.html">Rules</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav><br>
+
+<div class="playerGameZone" style="height: 321px;">
+  <h4 id="playerScore">Player</h4>
+  <div id="playBodyDiv">
+    <div id="player"></div>
+  </div>
+</div>
+
+
+<div class="buttons">
+
+    <button id="play" class="playGame #ffb74d black lighten-2 btn" type="button" name="Play" value="">LoadData</button>
+
+    <button id="hit" class="playGame #ffb74d black lighten-2 btn" type="button" name="hit" value="">dealCards</button>
+
+    <button id="stand" class="playGame #ffb74d black lighten-2 btn" type="button" name="stand" value="">Stand</button>
+
+    <button id="testButton" class="playGame #ffb74d black lighten-2 btn" type="button" name="stand" value="">Hit</button>
+
+    <button id="newGame" class="playGame #ffb74d black lighten-2 btn" type="button" name="stand" value="">New Hand</button>
+
+</div>
+
+
+
+<div class="dealerGameZone" style="height: 321px;">
+
+  <h4 id="dealerScore">Dealer</h4>
+  <div id="dealerBodyDiv">
+     <div id="dealer"></div>
+ </div>
+
+</div>
+
+
+
+    <footer class="page-footer #2962ff black accent-4">
+        <div class="container">
+          <div class="row">
+            <div class="col s6">
+              <h5 class="white-text"></h5>
+              <p class="white-text"></p>
+            </div>
+            <div class="col s6 hide-on-med-and-down">
+              <ul>
+                <li>
+                  <a href="#" class="white-text">Stuff Coming Soon</a>
+                </li>
+                <li>
+                  <a href="#" class="white-text"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <br></footer>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+    <script src="testCode.js"></script>
+</body>
+
+</html>
