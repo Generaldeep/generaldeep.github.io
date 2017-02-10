@@ -62,24 +62,24 @@ standButton.addEventListener('click', function(event) {
 
 
 
-let newGame = document.getElementById('newGame');
-newGame.addEventListener('click', function(event) {
-  event.preventDefault();
-
-  // delegateRoles(allFetchedData);
-
-  // while (playerBody.firstChild && dealerBody.firstChild) {
-  //     playerBody.removeChild(playerBody.firstChild);
-  //     dealerBody.removeChild(dealerBody.firstChild);
-  // }
-
-
-  // fetchCard()
-  // playBtnCount = 0;
-  // playerCount = 0;
-  // dealerCount = 0;
-
-})
+// let newGame = document.getElementById('newGame');
+// newGame.addEventListener('click', function(event) {
+//   event.preventDefault();
+//
+//   // delegateRoles(allFetchedData);
+//
+//   // while (playerBody.firstChild && dealerBody.firstChild) {
+//   //     playerBody.removeChild(playerBody.firstChild);
+//   //     dealerBody.removeChild(dealerBody.firstChild);
+//   // }
+//
+//
+//   // fetchCard()
+//   // playBtnCount = 0;
+//   // playerCount = 0;
+//   // dealerCount = 0;
+//
+// })
 
 
 //stop async mistake function attempt
