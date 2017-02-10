@@ -21,10 +21,10 @@ hitButton.addEventListener('click', function(event) {
   event.preventDefault();
 
   runningCardCount = 0;
-
   if (cantHitNoMore > 0) {
     return;
-  } else {
+  }
+  else {
     delegateRoles(allFetchedData);
     checkForBlackjack();
     console.log('running count in hit button: ' +runningCardCount);
@@ -91,6 +91,13 @@ standButton.addEventListener('click', function(event) {
 })
 
 
+// let refreshButton = document.getElementById('refresh');
+// refreshButton.addEventListener('click', function(event) {
+//
+// })
+
+
+
 function fetchCard() {
   // let deckID = '9lykfe2jz7o4';
   return fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=20`)
@@ -122,9 +129,9 @@ function delegateRoles(arr) {
 
   runningCardCount++;
   console.log('running card count in delegateRoles: '+runningCardCount);
-
-
 }
+
+
 //
 function assignCard(cardImgAdress) {
   let img = new Image();
@@ -204,17 +211,19 @@ function valueOfAce(value, countOn) {
 
 function checkForBlackjack() {
   if (playerCount > 21) {
-    return checkDealerTotal();
+    checkDealerTotal();
   }
   else if(playerCount === 21) {
-    while (dealerCount < 17) {
-      runningCardCount = 3;
-      changeHiddenCardImage();
-      changeHiddenCardValue();
-      delegateRoles(allFetchedData)
-      // checkForBlackjack();
+    checkDealerTotal();
     }
+  else if (playerCount === dealerCount) {
+    alert('PUSH!');
   }
+
+  else if(playerCount < 21) {
+    return;
+  }
+
   else {
     checkDealerTotal();
   }

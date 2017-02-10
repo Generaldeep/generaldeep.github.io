@@ -1,33 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Play</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+<head>
+    <title>Blackjack</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" src="materialize.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
 
 
-  <nav class="#2962ff teal accent-4">
-    <div class="nav-wrapper container">
-      <a href="index.html" class="brand-logo">Home</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="#">Play</a></li>
-        <li><a href="rules.html">Rules</a></li>
-        <li><a href="signUp.html">Sign Up</a></li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="#2962ff teal accent-4">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">Play</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="rules.html">Rules</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav><br>
 
-
-
+<div class="playerGameZone" style="height: 321px;">
+  <h4 id="playerScore">Player</h4>
+  <div id="playBodyDiv">
+    <div id="player"></div>
   </div>
+</div>
+
+
+<div >
+
+
+    <button id="play"  class="waves-effect waves-light btn" type="button" name="Play" value="">New Hand</button>
+
+    <button id="deal"  class="waves-effect waves-light btn" type="button" name="hit" value="">Deal Cards</button>
+
+    <button id="stand"  class="waves-effect waves-light btn" type="button" name="stand" value="">Stand</button>
+
+    <button id="hit"  class="waves-effect waves-light btn" type="button" name="stand" value="">Hit</button>
+
+    <!-- <button id="refresh"  class="waves-effect waves-light btn" type="button" name="stand" value="">Refresh</button> -->
+
+</div>
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<div class="dealerGameZone" style="height: 321px;">
 
-<!-- <script src="testCode.js"></script> -->
-  </body>
+  <h4 id="dealerScore">Dealer</h4>
+  <div id="dealerBodyDiv">
+     <div id="dealer"></div>
+ </div>
+
+</div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+    <script src="testCode.js"></script>
+</body>
+
 </html>
