@@ -26,6 +26,7 @@ hitButton.addEventListener('click', function(event) {
     return;
   } else {
     delegateRoles(allFetchedData);
+    checkForBlackjack();
     console.log('running count in hit button: ' +runningCardCount);
   }
 })
@@ -118,11 +119,10 @@ function delegateRoles(arr) {
     tempVar = arr.shift();
     discardedCardArr.push(tempVar);
   }
-  // checkForBlackjack();
+
   runningCardCount++;
   console.log('running card count in delegateRoles: '+runningCardCount);
-  // checkForBlackjack(playerCount);
-  // runningCardCount++;
+
 
 }
 //
@@ -206,6 +206,15 @@ function checkForBlackjack() {
   if (playerCount > 21) {
     return checkDealerTotal();
   }
+  else if(playerCount === 21) {
+    while (dealerCount < 17) {
+      runningCardCount = 3;
+      changeHiddenCardImage();
+      changeHiddenCardValue();
+      delegateRoles(allFetchedData)
+      // checkForBlackjack();
+    }
+  }
   else {
     checkDealerTotal();
   }
@@ -224,7 +233,7 @@ function checkDealerTotal() {
       changeHiddenCardImage();
       changeHiddenCardValue();
       delegateRoles(allFetchedData)
-      // runningCardCount++; //do i need to increment runningCardCount here?
+      // checkForBlackjack();
     }
   }
 }
@@ -232,15 +241,13 @@ function checkDealerTotal() {
 
 function changeHiddenCardImage() {
   hiddenCard.src = discardedCardArr[0].imgAddress.toString();
-  // hiddenCard.style.float = 'left';
+  hiddenCard.style.float = 'left';
   return dealerBody.appendChild(hiddenCard);
 }
 
 
-
 function changeHiddenCardValue() {
   let tempVal = discardedCardArr[0].cardValue;
-
   if (!parseInt(tempVal)) {
     if (tempVal === 'ACE') {
       return valueOfAce(tempVal, dealerCount);
