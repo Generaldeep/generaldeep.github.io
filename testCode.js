@@ -9,6 +9,7 @@ let playBtnCount = 0; //if count === 4 play button disabled until new hand
 let runningCardCount = 0; //method to deal cards to player/dealer
 let playerCount = 0; //total of player
 let dealerCount = 0; //total of dealer
+let runCount = 0;
 let cardsAndValuesArray = [];
 let dealerHiddenCardValue = [];
 let cardImgAndValueArr = [];
@@ -24,6 +25,8 @@ testButton.addEventListener('click', function(event) {
 
 
 
+
+
 let playButton = document.getElementById('play');
 playButton.addEventListener('click', function(event) {
   event.preventDefault();
@@ -36,19 +39,25 @@ playButton.addEventListener('click', function(event) {
 let hitButton = document.getElementById('hit')
 hitButton.addEventListener('click', function(event) {
   event.preventDefault();
-  let deal = 0;
-  while(deal < 4) {
+
+let deal = 0;
+
+if(runCount > 0) {
+  console.log('inside hitbutton');
+}
+else {
+   while(deal < 4) {
+     runCount++;
+     console.log('runCount');
     delegateRoles(allFetchedData);
     deal++;
   }
-
-  // if (playBtnCount < 100) {
-  //   alert('Please press play for a new hand');
-  // } else {
-  //   runningCardCount = 0;
-  //   delegateRoles(cardImgAndValueArr);
-  // }
+}
 })
+
+
+
+
 
 
 let standButton = document.getElementById('stand');
