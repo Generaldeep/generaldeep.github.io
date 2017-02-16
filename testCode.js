@@ -28,14 +28,14 @@ hitButton.addEventListener('click', function(event) {
 function winner() {
   if((playerTotal > dealerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal < 21)) {
     // alert('Player Wins!')
-    Materialize.toast('Player Wins!', 2000)
+    Materialize.toast('Player Wins!', 2000, 'rounded')
   }
   else if(dealerTotal > playerTotal && dealerTotal <= 21) {
-    Materialize.toast('Dealer Wins!', 2000)
+    Materialize.toast('Dealer Wins!', 2000, 'rounded')
     // alert('Dealer Wins!')
   }
   else {
-    Materialize.toast('TIE!', 2000)
+    Materialize.toast('TIE!', 2000, 'rounded')
   }
 
 }
