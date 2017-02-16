@@ -9,6 +9,7 @@ let dealCount = 0;
 let playerTotal = 0;
 let dealerTotal = 0;
 let hitButtonEnabled = true;
+let standButtonEnabled = true;
 let gameOver = false;
 
 
@@ -30,11 +31,10 @@ let standButton = document.getElementById('stand');
 standButton.addEventListener('click', function(event) {
   event.preventDefault();
   hitButtonEnabled = false;
-  disableStandutton = 0;
 
-  if (disableStandutton < 1) {
+  if (standButtonEnabled === true) {
     changeDealerTotal();
-    disableStandutton++;
+    standButtonEnabled  = false;
   }
   else {
     return;
