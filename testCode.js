@@ -57,6 +57,11 @@ loadDeck.addEventListener('click', function(event) {
       fetchCard()
       fetchCardsCount++;
     }
+    setTimeout(function() {
+
+      Materialize.toast('Deck ready, click deal cards!', 2000, 'rounded')
+    }, 1000)
+
 })
 
 let newGame = document.getElementById('newGame')
