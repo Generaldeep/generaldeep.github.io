@@ -25,7 +25,18 @@ hitButton.addEventListener('click', function(event) {
   }
 })
 
+function winner() {
+  if((playerTotal > dealerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal < 21)) {
+    alert('Player Wins!')
+  }
+  else if(dealerTotal > playerTotal && dealerTotal <= 21) {
+    alert('Dealer Wins!')
+  }
+  else {
+    alert('TIE!')
+  }
 
+}
 
 let standButton = document.getElementById('stand');
 standButton.addEventListener('click', function(event) {
@@ -35,6 +46,7 @@ standButton.addEventListener('click', function(event) {
   if (standButtonEnabled === true) {
     changeDealerTotal();
     standButtonEnabled  = false;
+    setTimeout(function(){ winner() }, 500);
   }
   else {
     return;
@@ -82,7 +94,6 @@ refreshButton.addEventListener('click', function(event) {
 
 
 function fetchCard() {
-  // let deckID = '9lykfe2jz7o4';
   return fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=20`)
     .then(function(response) {
       return response.json();
@@ -107,6 +118,7 @@ function dealNewCard(arr, dealTo) {
     if (dealTo === player) {
       assignCard(arr[i].imgAddress, player);
       caluculateCount(arr[i].cardValue);
+
       tempVar = arr.shift();
     } else if (dealTo === dealer) {
       assignCard(arr[i].imgAddress, dealer);
