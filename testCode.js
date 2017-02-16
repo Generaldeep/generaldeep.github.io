@@ -4,9 +4,7 @@ let player = document.getElementById('player');
 let dealer = document.getElementById('dealer');
 let hiddenCard = document.getElementById('dealer');
 let fetchedData = [];
-let discardedCardArr = [];
 let dealerHiddenCardValue = [];
-
 let dealCount = 0;
 let playerTotal = 0;
 let dealerTotal = 0;
@@ -18,7 +16,6 @@ let gameOver = false;
 let hitButton = document.getElementById('hit');
 hitButton.addEventListener('click', function(event) {
   event.preventDefault();
-  runningCardCount = 0;
 
   if (hitButtonEnabled === true) {
     dealNewCard(fetchedData, player);
@@ -33,7 +30,6 @@ let standButton = document.getElementById('stand');
 standButton.addEventListener('click', function(event) {
   event.preventDefault();
   hitButtonEnabled = false;
-  runningCardCount = 3;
   disableStandutton = 0;
 
   if (disableStandutton < 1) {
@@ -58,8 +54,8 @@ loadDeck.addEventListener('click', function(event) {
 let newGame = document.getElementById('newGame')
 newGame.addEventListener('click', function(event) {
   event.preventDefault();
-  // let dealCount = 0;
   let runCount = 0;
+
   if (runCount > 0) {
     return;
   }
@@ -111,15 +107,11 @@ function dealNewCard(arr, dealTo) {
     if (dealTo === player) {
       assignCard(arr[i].imgAddress, player);
       caluculateCount(arr[i].cardValue);
-      // updatePlayerGameStats(arr[i].cardValue);
       tempVar = arr.shift();
-      discardedCardArr.push(tempVar);
     } else if (dealTo === dealer) {
       assignCard(arr[i].imgAddress, dealer);
       caluculateCount(arr[i].cardValue);
-      // changeDealerTotal(arr[i].cardValue);
       tempVar = arr.shift();
-      discardedCardArr.push(tempVar);
     }
   }
 }
@@ -136,7 +128,6 @@ function assignCard(cardImgAdress, dealTo) {
       dealerHiddenCardValue.push(cardImgAdress);
       img.src = './images/cheetah.jpg';
       hiddenCard = img;
-      hiddenCard.style.float = 'left';
       return dealerBody.appendChild(hiddenCard);
     }
     else {
@@ -160,38 +151,37 @@ function assignCard(cardImgAdress, dealTo) {
 
 
 function caluculateCount(cardVal) {
-  // console.log('card value in caluculateCount: '+cardVal);
   if ((dealCount === 1)) {
     dealerHiddenCardValue.push(cardVal);
-    cardVal = 0;
-    dealerTotal += parseInt(cardVal);
+    dealerTotal += 0;
     document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
-  }
-
-  else if (dealCount % 2 === 0) {
+  } else if (dealCount % 2 === 0) {
     if (!parseInt(cardVal)) {
       if (cardVal === 'ACE') {
-        valueOfAce(cardVal, player);
-        document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerTotal;
-        return
+        return valueOfAce(player);
       }
       cardVal = 10;
+      playerTotal += parseInt(cardVal);
+      document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerTotal;
     }
-    playerTotal += parseInt(cardVal);
-    document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerTotal;
+    else {
+      playerTotal += parseInt(cardVal);
+      document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerTotal;
+    }
   }
-
   else {
     if (!parseInt(cardVal)) {
       if (cardVal === 'ACE') {
-        valueOfAce(cardVal, dealer);
-        document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
-        return
+        return valueOfAce(dealer);
       }
       cardVal = 10;
+      dealerTotal += parseInt(cardVal);
+      document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
     }
-    dealerTotal += parseInt(cardVal);
-    document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
+    else {
+      dealerTotal += parseInt(cardVal);
+      document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
+    }
   }
 }
 
@@ -200,16 +190,15 @@ function caluculateCount(cardVal) {
 
 
 
-function valueOfAce(value, countOn) {
+function valueOfAce(countOn) {
+  let value = 0;
   if (countOn === player) {
     if (playerTotal < 10) {
-      // console.log('if player count is < 10');
       value = 11;
       playerTotal += value;
       document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerTotal;
       return;
     } else if (playerTotal > 10) {
-      // console.log('if player count is > 10');
       value = 1;
       playerTotal += value;
       document.getElementById("playerScore").innerHTML = 'Player Count: ' + playerTotal;
@@ -219,13 +208,11 @@ function valueOfAce(value, countOn) {
 
    else if (countOn === dealer) {
     if (dealerTotal < 10) {
-      // console.log('if dealer count is < 10');
       value = 11;
       dealerTotal += value;
       document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
       return;
     } else if (dealerTotal > 10) {
-      // console.log('if dealer count is > 10');
       value = 1;
       dealerTotal += value;
       document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
@@ -241,20 +228,27 @@ function valueOfAce(value, countOn) {
 
 
 function changeDealerTotal() {
-  if (playerTotal > 21) {
-    changeHiddenCardImage();
-    changeHiddenCardValue();
-    document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
+
+  changeHiddenCardImage();
+  changeHiddenCardValue();
+
+  while (dealerTotal < 17) {
+    dealCount = 3;
+    dealNewCard(fetchedData, dealer)
+    // document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
   }
-  else {
-    while (dealerTotal < 17) {
-      dealNewCard(fetchedData)
-      changeHiddenCardImage();
-      changeHiddenCardValue();
-      document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
-      // updatePlayerGameStats();
-    }
-  }
+  // if (playerTotal > 21) {
+  //   changeHiddenCardImage();
+  //   changeHiddenCardValue();
+  // }
+  // else {
+  //   while (dealerTotal < 17) {
+  //     changeHiddenCardImage();
+  //     changeHiddenCardValue();
+  //     dealNewCard(fetchedData)
+  //     document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
+  //   }
+  // }
 }
 
 
@@ -266,13 +260,40 @@ function changeHiddenCardImage() {
 
 
 function changeHiddenCardValue() {
-  let tempVal = dealerHiddenCardValue[1].cardValue;
+  let tempVal = dealerHiddenCardValue[1];
   if (!parseInt(tempVal)) {
     if (tempVal === 'ACE') {
-      return valueOfAce(tempVal, dealerTotal);
+      return valueOfAce(dealer);
     }
     tempVal = 10;
   }
   dealerTotal += parseInt(tempVal);
+  document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
   return dealerTotal;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
