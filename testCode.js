@@ -17,7 +17,7 @@ let hitButton = document.getElementById('hit');
 hitButton.addEventListener('click', function(event) {
   event.preventDefault();
 
-  if (hitButtonEnabled === true) {
+  if (hitButtonEnabled === true && playerTotal < 21) {
     dealNewCard(fetchedData, player);
   } else {
     return;
@@ -189,7 +189,6 @@ function caluculateCount(cardVal) {
 
 
 
-
 function valueOfAce(countOn) {
   let value = 0;
   if (countOn === player) {
@@ -235,7 +234,6 @@ function changeDealerTotal() {
   while (dealerTotal < 17) {
     dealCount = 3;
     dealNewCard(fetchedData, dealer)
-    // document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
   }
   // if (playerTotal > 21) {
   //   changeHiddenCardImage();
