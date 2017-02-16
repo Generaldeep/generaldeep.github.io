@@ -20,25 +20,18 @@ hitButton.addEventListener('click', function(event) {
 
   if (hitButtonEnabled === true && playerTotal < 21) {
     dealNewCard(fetchedData, player);
+
+    if(playerTotal > 21) {
+      changeDealerTotal();
+      hitButtonEnabled = false;
+      setTimeout(function(){ winner() }, 1);
+    }
   } else {
     return;
   }
+
 })
 
-function winner() {
-  if((playerTotal > dealerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal < 21)) {
-    // alert('Player Wins!')
-    Materialize.toast('Player Wins!', 2000, 'rounded')
-  }
-  else if(dealerTotal > playerTotal && dealerTotal <= 21) {
-    Materialize.toast('Dealer Wins!', 2000, 'rounded')
-    // alert('Dealer Wins!')
-  }
-  else {
-    Materialize.toast('TIE!', 2000, 'rounded')
-  }
-
-}
 
 let standButton = document.getElementById('stand');
 standButton.addEventListener('click', function(event) {
@@ -54,6 +47,7 @@ standButton.addEventListener('click', function(event) {
     return;
   }
 })
+
 
 let loadDeck = document.getElementById('play');
 loadDeck.addEventListener('click', function(event) {
@@ -120,7 +114,6 @@ function dealNewCard(arr, dealTo) {
     if (dealTo === player) {
       assignCard(arr[i].imgAddress, player);
       caluculateCount(arr[i].cardValue);
-
       tempVar = arr.shift();
     } else if (dealTo === dealer) {
       assignCard(arr[i].imgAddress, dealer);
@@ -131,7 +124,7 @@ function dealNewCard(arr, dealTo) {
 }
 
 
-//
+
 function assignCard(cardImgAdress, dealTo) {
   let img = new Image();
   img.style.width = '170px';
@@ -169,7 +162,8 @@ function caluculateCount(cardVal) {
     dealerHiddenCardValue.push(cardVal);
     dealerTotal += 0;
     document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
-  } else if (dealCount % 2 === 0) {
+  }
+  else if (dealCount % 2 === 0) {
     if (!parseInt(cardVal)) {
       if (cardVal === 'ACE') {
         return valueOfAce(player);
@@ -236,12 +230,7 @@ function valueOfAce(countOn) {
 
 
 
-
-
-
-
 function changeDealerTotal() {
-
   changeHiddenCardImage();
   changeHiddenCardValue();
 
@@ -249,18 +238,6 @@ function changeDealerTotal() {
     dealCount = 3;
     dealNewCard(fetchedData, dealer)
   }
-  // if (playerTotal > 21) {
-  //   changeHiddenCardImage();
-  //   changeHiddenCardValue();
-  // }
-  // else {
-  //   while (dealerTotal < 17) {
-  //     changeHiddenCardImage();
-  //     changeHiddenCardValue();
-  //     dealNewCard(fetchedData)
-  //     document.getElementById("dealerScore").innerHTML = 'Dealer Count: ' + dealerTotal;
-  //   }
-  // }
 }
 
 
@@ -288,9 +265,18 @@ function changeHiddenCardValue() {
 
 
 
+function winner() {
+  if((playerTotal > dealerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal < 21)) {
+    Materialize.toast('Player Wins!', 2000, 'rounded')
+  }
+  else if(dealerTotal > playerTotal && dealerTotal <= 21 || (playerTotal > 21 && dealerTotal < 21)) {
+    Materialize.toast('Dealer Wins!', 2000, 'rounded')
+  }
+  else {
+    Materialize.toast('PUSH!', 2000, 'rounded')
+  }
 
-
-
+}
 
 
 
